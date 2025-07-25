@@ -21,7 +21,17 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mvn -s settings.xml -DskipTests install'
+                script {
+                    echo "Starting build with Maven..."
+                    sh 'mvn -s settings.xml clean install -DskipTests'
+                }
+            }
+            
+            post {
+                success {
+                    echo "Now Archiving."
+                    ArchiveArtifacts artifacts: '**/*.war', fingerprint: true
+                }
             }
         }
     }
