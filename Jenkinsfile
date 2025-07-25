@@ -26,11 +26,11 @@ pipeline {
                     sh 'mvn -s settings.xml clean install -DskipTests'
                 }
             }
-            
+
             post {
                 success {
                     echo "Now Archiving."
-                    ArchiveArtifacts artifacts: '**/*.war', fingerprint: true
+                    achiveArtifacts artifacts: '**/*.war', fingerprint: true
                 }
             }
         }
