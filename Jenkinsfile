@@ -20,7 +20,7 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
+        stage("Build") {
             steps {
                 echo "Building artifact..."
                 sh 'mvn -s settings.xml -DskipTests install'
@@ -34,19 +34,19 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage("Test") {
             steps {
                 sh 'mvn -s settings.xml test'
             }
         }
 
-        stage('Checkstyle Analysis') {
+        stage("Checkstyle Analysis") {
             steps {
                 sh 'mvn -s settings.xml checkstyle:checkstyle'
             }
         }
 
-        stage('Sonar Analysis') {
+        stage("Sonar Analysis") {
             environment {
                 scannerHome = tool "${SONARSCANNER}"
             }
@@ -64,7 +64,7 @@ pipeline {
             }
         }
 
-        stage('Quality Gate') {
+        stage("Quality Gate") {
             steps {
                 timeout(time: 1, unit: 'HOURS') {
                     waitForQualityGate abortPipeline: true
