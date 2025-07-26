@@ -15,30 +15,13 @@ pipeline {
         NEXUS_GRP_REPO = 'vpro-maven-group'
         NEXUS_LOGIN = 'nexuslogin'
         NEXUS_USER = 'admin'
-
     }
 
     stages {
         stage('Build') {
             steps {
-                script {
-                    echo "Starting build with Maven..."
-                    sh 'mvn -s settings.xml clean install -DskipTests'
-                    echo "==> Maven build finished."
-                }
-            }
-
-            post {
-                success {
-                    echo "Now Archiving."
-                    archiveArtifacts artifacts: '**/*.war', fingerprint: true
-                }
-
-                failure {
-                    echo "==> Build failed."
-                }
+                sh 'mvn -s settings.xml -DskipTests install'
             }
         }
     }
 }
-
